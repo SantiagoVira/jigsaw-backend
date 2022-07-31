@@ -1,7 +1,7 @@
 from io import BytesIO
 from flask import Flask, request, send_file
 from flask_cors import CORS
-from cut_image import cut_image
+from app.cut_image import cut_image
 from PIL import Image
 
 app = Flask(__name__)
@@ -21,5 +21,3 @@ def get_data():
     final = cut_image(file, rows, cols)
     return serve_pil_image(final)
 
-if __name__ == "__main__":
-    app.run()
