@@ -33,7 +33,7 @@ from .utils import reshape_split, shuffle_img_tiles, unsplit
 
 def shuffle_img(img: Image, rows: int, cols: int):
     new_dimensions = (math.lcm(img.size[0], cols), math.lcm(img.size[1], rows))
-    new_img = img.resize(new_dimensions)
+    new_img = img.resize(new_dimensions, Image.NEAREST)
     new_img_arr = np.array(new_img)
 
     img_tiles = reshape_split(new_img_arr, rows, cols)
