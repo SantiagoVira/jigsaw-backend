@@ -21,6 +21,8 @@ def get_data():
     cols = int(request.form["cols"])
     final = shuffle_img(file, rows, cols)
     
+    print("iPhone" in request.headers.get('User-Agent'))
+    print(bool(request.form["isPortrait"]))
     if "iPhone" in request.headers.get('User-Agent') and bool(request.form["isPortrait"]):
       final.rotate(270)
 
