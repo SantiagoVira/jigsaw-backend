@@ -32,9 +32,12 @@ from .utils import reshape_split, shuffle_img_tiles, unsplit
 #   return data
 
 def shuffle_img(img: Image, rows: int, cols: int):
-    new_dimensions = (math.lcm(img.size[0], cols), math.lcm(img.size[1], rows))
-    new_img = img.resize(new_dimensions, Image.NEAREST)
-    new_img_arr = np.array(new_img)
+    # new_dimensions = (math.lcm(img.size[0], cols), math.lcm(img.size[1], rows))
+    # new_img = img.resize(new_dimensions, Image.NEAREST)
+
+    new_img = img.crop((0, 0, img.width-(img.width % cols), img.height-(img.height % rows)))
+
+    new_img_arr = np.array(new_img) # change to new_img if uncommenting the resizing shizzle
 
     img_tiles = reshape_split(new_img_arr, rows, cols)
     img_tiles_shuffled = shuffle_img_tiles(img_tiles, rows, cols)
