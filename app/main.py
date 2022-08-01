@@ -16,17 +16,12 @@ def serve_pil_image(pil_img):
 @app.route('/', methods=['GET', 'PUT'])
 def get_data():
     file = Image.open(request.files["image"].stream)
+    if "iPhone" in request.headers.get('User-Agent') and bool(request.form["isPortrait"]):
+      file = file.rotate(90)
    
     rows = int(request.form["rows"])
     cols = int(request.form["cols"])
     final = cut_image(file, rows, cols)
-    
-    print("iPhone" in request.headers.get('User-Agent'))
-    print(bool(request.form["isPortrait"]))
-    print(final.width, final.height)
-    if "iPhone" in request.headers.get('User-Agent') and bool(request.form["isPortrait"]):
-      final = final.rotate(90)
-    print(final.width, final.height)
 
     return serve_pil_image(final)
 
