@@ -1,8 +1,9 @@
 import numpy as np
 import random
 from PIL import Image
+import math
 
-from .utils import compute_lcm, reshape_split, shuffle_img_tiles, unsplit
+from .utils import reshape_split, shuffle_img_tiles, unsplit
 
 # def cut_image(img_data, rows, cols):
 #   # Prepare the image
@@ -31,7 +32,7 @@ from .utils import compute_lcm, reshape_split, shuffle_img_tiles, unsplit
 #   return data
 
 def shuffle_img(img: Image, rows: int, cols: int):
-    new_dimensions = (compute_lcm(img.size[0], cols), compute_lcm(img.size[1], rows))
+    new_dimensions = (math.lcm(img.size[0], cols), math.lcm(img.size[1], rows))
     new_img = img.resize(new_dimensions)
     new_img_arr = np.array(new_img)
 
