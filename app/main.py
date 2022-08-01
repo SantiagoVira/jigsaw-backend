@@ -1,7 +1,7 @@
 from io import BytesIO
 from flask import Flask, request, send_file
 from flask_cors import CORS
-from .cut_image import shuffle_img
+from app.cut_image import shuffle_img
 from PIL import Image
 
 app = Flask(__name__)
@@ -13,7 +13,7 @@ def serve_pil_image(pil_img):
     img_io.seek(0)
     return send_file(img_io, mimetype='image/png')
 
-@app.route('/', methods=['PUT'])
+@app.route('/', methods=['GET', 'PUT'])
 def get_data():
     file = Image.open(request.files["image"].stream)
     rows = int(request.form["rows"])
