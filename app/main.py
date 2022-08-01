@@ -16,8 +16,10 @@ def serve_pil_image(pil_img):
 @app.route('/', methods=['GET', 'PUT'])
 def get_data():
     file = Image.open(request.files["image"].stream)
+    print(file.width, file.height)
     rows = int(request.form["rows"])
     cols = int(request.form["cols"])
     final = shuffle_img(file, rows, cols)
+    
     return serve_pil_image(final)
 
