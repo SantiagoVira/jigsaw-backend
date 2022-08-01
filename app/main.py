@@ -25,7 +25,7 @@ def get_data():
     print(bool(request.form["isPortrait"]))
     print(final.width, final.height)
     if "iPhone" in request.headers.get('User-Agent') and bool(request.form["isPortrait"]):
-      final.rotate(90)
+      final = final.rotate(90)
     print(final.width, final.height)
 
     return serve_pil_image(final)
