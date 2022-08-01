@@ -1,2 +1,3 @@
-# jigsaw-backend
- Backend for jigsaw app
+# sawjig-backend
+
+Backend for sawjig app
