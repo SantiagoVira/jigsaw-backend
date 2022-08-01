@@ -5,10 +5,11 @@ import math
 
 from .utils import reshape_split, shuffle_img_tiles, unsplit
 
-def cut_image(img_data, rows, cols):
+def cut_image(img_data, rows:int, cols:int, turn: bool=False):
   # Prepare the image
   cropped_img = img_data.crop((0, 0, img_data.width-(img_data.width % cols), img_data.height-(img_data.height % rows)))
   img = np.array(cropped_img)
+  np.rot90(img, 3)
   height, width, colorScheme = img.shape
 
   sec_height = height // rows
