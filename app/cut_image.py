@@ -43,4 +43,4 @@ def shuffle_img(img: Image, rows: int, cols: int):
     img_tiles_shuffled = shuffle_img_tiles(img_tiles, rows, cols)
     img_unsplit = unsplit(img_tiles_shuffled)
 
-    return Image.fromarray(img_unsplit, 'RGB').resize(img.size)
+    return Image.fromarray(img_unsplit, 'RGB') #.resize(img.size)
