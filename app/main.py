@@ -16,7 +16,8 @@ def serve_pil_image(pil_img):
 @app.route('/', methods=['GET', 'PUT'])
 def get_data():
     file = Image.open(request.files["image"].stream)
-    print(file.width, file.height)
+    if "iPhone" in request.headers.get('User-Agent') and bool(request.form["isPortrait"]):
+      file.rotate(270)
     rows = int(request.form["rows"])
     cols = int(request.form["cols"])
     final = shuffle_img(file, rows, cols)
