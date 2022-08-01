@@ -17,7 +17,7 @@ def serve_pil_image(pil_img):
 def get_data():
     file = Image.open(request.files["image"].stream)
     if "iPhone" in request.headers.get('User-Agent') and bool(request.form["isPortrait"]):
-      file = file.rotate(90)
+      file = file.rotate(270)
    
     rows = int(request.form["rows"])
     cols = int(request.form["cols"])
