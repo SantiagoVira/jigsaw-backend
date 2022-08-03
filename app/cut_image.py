@@ -5,7 +5,7 @@ import math
 
 from .utils import reshape_split, shuffle_img_tiles, unsplit
 
-def cut_image(img_data, rows:int, cols:int, turn: bool=False):
+def cut_image(img_data: Image, rows:int, cols:int, turn: bool=False):
   # Prepare the image
   cropped_img = img_data.crop((0, 0, img_data.width-(img_data.width % cols), img_data.height-(img_data.height % rows)))
   img = np.array(cropped_img)
@@ -37,13 +37,15 @@ def cut_image(img_data, rows:int, cols:int, turn: bool=False):
   data = Image.fromarray(final)
   return data
 
-def shuffle_img(img: Image, rows: int, cols: int):
+def shuffle_img(img: Image, rows: int, cols: int, turn: bool=False):
     new_dimensions = (math.lcm(img.size[0], cols), math.lcm(img.size[1], rows))
     new_img = img.resize(new_dimensions, Image.NEAREST)
 
     # new_img = img.crop((0, 0, img.width-(img.width % cols), img.height-(img.height % rows)))
 
     new_img_arr = np.array(new_img) # change to new_img if uncommenting the resizing shizzle
+    if turn:
+      new_img_arr = np.rot90(new_img_arr, 3)
 
     img_tiles = reshape_split(new_img_arr, rows, cols)
     img_tiles_shuffled = shuffle_img_tiles(img_tiles, rows, cols)
