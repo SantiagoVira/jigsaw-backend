@@ -34,7 +34,7 @@ def cut_image(img_data, rows:int, cols:int, turn: bool=False):
   if np.array_equal(img, final):
     return cut_image(img_data, rows, cols, turn)
 
-  data = Image.fromarray(np.uint8(final))
+  data = Image.fromarray(final)
   return data
 
 def shuffle_img(img: Image, rows: int, cols: int):
