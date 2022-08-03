@@ -16,10 +16,11 @@ def serve_pil_image(pil_img):
 @app.route('/', methods=['GET', 'PUT'])
 def get_data():
     file = Image.open(request.files["image"].stream)
-    turn =  "iPhone" in request.headers.get('User-Agent') and bool(request.form["isPortrait"])
+    turn =  str(file.width) != request.form["width"]
    
     rows = int(request.form["rows"])
     cols = int(request.form["cols"])
     final = cut_image(file, rows, cols, turn)
+
     return serve_pil_image(final)
 

@@ -30,6 +30,10 @@ def cut_image(img_data, rows:int, cols:int, turn: bool=False):
     final_rows.append(np.hstack(choices))
 
   final = np.vstack(final_rows)
+
+  if np.array_equal(img, final):
+    return cut_image(img_data, rows, cols, turn)
+
   data = Image.fromarray(np.uint8(final))
   return data
 
