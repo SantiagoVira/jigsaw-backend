@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 def unsplit(image: np.ndarray):
     img_height, img_width, tile_height, tile_width, pix = image.shape
@@ -39,3 +40,27 @@ def reshape_split(image: np.ndarray, rows: int, cols: int):
     )
 
     return tiled_array.swapaxes(1, 2)
+
+def chunkify_array(arr: np.ndarray, rows: int, cols:int, sec_size: tuple[int, int]):
+  chunks= []
+  for y in range(rows):
+    for x in range(cols):
+      x_scalar = np.arange(sec_size[0] * x, sec_size[0] * (x + 1))
+      y_scalar = np.arange(sec_size[1] * y, sec_size[1] * (y + 1))
+      chunks.append(arr[y_scalar[:,None], x_scalar[None,:]])
+  
+  return chunks
+
+def random_reassemble(original_chunks, rows:int, cols:int):
+  chunks = original_chunks.copy()
+  final_rows = []
+  for i in range(rows):
+    choices = [chunks.pop(random.randrange(len(chunks))) for i in range(cols)]
+    final_rows.append(np.hstack(choices))
+
+  return np.vstack(final_rows)
+
+def rebuild(original_chunks):
+  chunks = original_chunks.copy()
+
+  return np.vstack([np.hstack(row) for row in chunks])

@@ -3,36 +3,23 @@ import random
 from PIL import Image
 import math
 
-from .utils import reshape_split, shuffle_img_tiles, unsplit
+from .utils import reshape_split, shuffle_img_tiles, unsplit, chunkify_array, random_reassemble
 
-def cut_image(img_data: Image, rows:int, cols:int, turn: bool=False):
+def cut_image(original_image: Image, rows:int, cols:int, turn: bool=False):
   # Prepare the image
-  cropped_img = img_data.crop((0, 0, img_data.width-(img_data.width % cols), img_data.height-(img_data.height % rows)))
+  if turn: original_image.rotate(270)
+  cropped_img = original_image.crop((0, 0, original_image.width-(original_image.width % cols), original_image.height-(original_image.height % rows)))
   img = np.array(cropped_img)
-  if turn:
-    img = np.rot90(img, 3)
   height, width, colorScheme = img.shape
 
-  sec_height = height // rows
-  sec_width = width // cols
+  sec_size = (width // cols, height // rows)
 
-  # Break up
-  chunks= []
-  for y in range(rows):
-    for x in range(cols):
-      x_scalar = np.arange(sec_width * x, sec_width * (x + 1))
-      y_scalar = np.arange(sec_height * y, sec_height * (y + 1))
-      chunks.append(img[y_scalar[:,None], x_scalar[None,:]])
-
-  final_rows = []
-  for i in range(rows):
-    choices = [chunks.pop(random.randrange(len(chunks))) for i in range(cols)]
-    final_rows.append(np.hstack(choices))
-
-  final = np.vstack(final_rows)
+  # Process
+  chunks = chunkify_array(img, rows, cols, sec_size)
+  final = random_reassemble(chunks, rows, cols)
 
   if np.array_equal(img, final):
-    return cut_image(img_data, rows, cols, turn)
+    return cut_image(original_image, rows, cols, turn)
 
   data = Image.fromarray(final)
   return data
