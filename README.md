@@ -1,3 +1,3 @@
 # sawjig-backend
 
-Backend for sawjig app
+Backend for [Sawjig](https://github.com/SantiagoVira/sawjig)
