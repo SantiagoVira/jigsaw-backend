@@ -17,7 +17,7 @@ def to_gif(original_image: Image, rows:int, cols:int, turn: bool=False):
   cropped_img = original_image.crop((0, 0, original_image.width-(original_image.width % cols), original_image.height-(original_image.height % rows)))
   img = np.array(cropped_img)
 
-  height, width, colorScheme = img.shape
+  height, width = img.shape[0], img.shape[1]
 
   sec_size = (width // cols, height // rows)
 
