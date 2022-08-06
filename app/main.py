@@ -19,7 +19,7 @@ def serve_gif(frames, total_duration:int):
   img_io = BytesIO()
   print(total_duration)
   print(total_duration/len(frames))
-  frames[0].save(img_io, 'GIF', quality=70, save_all=True, append_images=frames[1:], duration=total_duration/len(frames), loop=0)
+  frames[0].save(img_io, 'GIF', quality=70, save_all=True, append_images=frames[1:], duration=total_duration/len(frames), loop=0, optimize=True)
   img_io.seek(0)
   return send_file(img_io, mimetype='image/gif')
 
